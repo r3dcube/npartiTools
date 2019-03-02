@@ -1,0 +1,16 @@
+import sys
+from npartiTools.npartiCurvePath import ui
+reload(sys.modules['npartiTools.npartiCurvePath.ui'])
+ui.makeTubeExtGui()
+
+
+'''
+import sys
+from npartiCurvePath import ui
+reload(sys.modules['npartiCurvePath.ui'])
+
+ui.makeTubeExtGui()
+'''
+
+for item in sys.path:
+    print(item)
