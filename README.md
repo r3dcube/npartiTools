@@ -1,7 +1,7 @@
 # npartiTools
 
 
-This tool combines several tools that exist in the ../scripts repository which will be removed soon. This update has more features and a UI bug fixes. 
+This tool combines several tools that exist in the ../scripts repository which will be removed soon. This update has more features and a UI bug fixes. This tool only has UI's for the tube extrusion and bubble scripts, additional tools will be added shortly.
 
 Tube Extrusion
 
