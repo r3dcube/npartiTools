@@ -1,7 +1,7 @@
 # npartiTools
 
 
-This tool combines several tools that exist in the ../scripts repository which will be removed soon. This update has more features and a UI bug fixes. This tool only has UI's for the tube extrusion and bubble scripts, additional tools will be added shortly.
+This tool combines several tools that exist in the ../scripts repository which will be removed soon. This update has more features and a UI bug fixes. This tool has UI's for tube extrusion, bubble scripts and curve extrusion, additional tools will be added shortly. Modify the downloaded folder from npartiTools-master > npartiTools and then place into a folder accessible by Maya.
 
 Tube Extrusion
 
