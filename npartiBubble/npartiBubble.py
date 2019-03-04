@@ -4,6 +4,7 @@ import random
 import maya.mel as mel
 
 def buildnBubbles(particleDict, folderName, doesBubblePop, minScale, maxScale, charUp, clothObjs):
+	print(doesBubblePop)
 	allParticleDictionary = particleDict
 	inc=0
 	minFrames = mc.playbackOptions( q=True, min=True)
@@ -24,7 +25,7 @@ def buildnBubbles(particleDict, folderName, doesBubblePop, minScale, maxScale, c
 			#curveName = "partiCurve" + charUp + '_' + str(curveParticleId)
 			curveObj = mc.curve(name = 'curveName_' + charUp + '_' + str("%0" + pad + "d")%inc, p = pointList)
 			locObj = mc.spaceLocator(name="bubLocator_" + charUp + '_' + str("%0" + pad + "d")%inc)
-			mc.pathAnimation(locObj, stu=sortedKeyFrameList[0], etu=sortedKeyFrameList[-1] ,c=curveObj,n=("moPath_" + 'tempName'))
+			mc.pathAnimation(locObj, stu=sortedKeyFrameList[0], etu=sortedKeyFrameList[-1] ,c=curveObj,n=("moPath_" + charUp + '_' + str("%0" + pad + "d")%inc))
 			#For every locator created, make a bubble and attach that to the locator in worldspace and parent in underneath
 			makeBubble = mc.polyCube(name="bubble_" + charUp + '_' + str("%0" + pad + "d")%inc, w=.1, h=.1, d=.1, sx=8, sy=8, sz=8)
 			mc.sculpt(makeBubble, maxDisplacement=.1)
@@ -79,14 +80,12 @@ def buildnBubbles(particleDict, folderName, doesBubblePop, minScale, maxScale, c
 				getRandNum = random.randint(34,300) #this is 35 above 0 and 35 below 151 so that we don't reach higher
 				randVertValHi = getRandNum + 35
 				randVertValLo = getRandNum - 35
-				#print getRandNum
 				mc.select(makeBubble[0] + ".vtx[" + str(randVertValLo) + ":" + str(randVertValHi) + "]")
 				makeTearableCon = mel.eval('createNConstraint tearableSurface false;')
-
+				#changes the transform and shape names, the order is specific
 				consTransform = mc.listRelatives(str(makeTearableCon[0]),p=True)
 				makeTearable = mc.rename(makeTearableCon, 'dynConsShape_'+ str("%0" + pad + "d")%inc)
 				makeTearable = mc.rename(consTransform, 'dynConstrain_'+ charUp + '_' + str("%0" + pad + "d")%inc)
-				print('makeTearable - {}'.format(makeTearable))
 				#Increase pressure before the tear happens
 				mc.setKeyframe(bubbleNClothName, attribute='pres', t=[sortedKeyFrameList[-1]-3])
 				mc.setAttr(bubbleNClothName + ".pres", 10)
@@ -102,7 +101,7 @@ def buildnBubbles(particleDict, folderName, doesBubblePop, minScale, maxScale, c
 				mc.setKeyframe(makeTearable, attribute='enable', t=[sortedKeyFrameList[0], sortedKeyFrameList[-1]])
 				mc.setAttr(makeTearable + ".enable", 0)
 				mc.setKeyframe(makeTearable, attribute='enable', t=[sortedKeyFrameList[-1]+1])
-
+				mc.setAttr(makeTearable + '.visibility', 0)
 				mc.parent(makeTearable, grpFolder)
 			elif mc.checkBox("bubblePop", q=True, v=1) == False:
 				print('bubble popping disabled')
@@ -112,8 +111,10 @@ def buildnBubbles(particleDict, folderName, doesBubblePop, minScale, maxScale, c
 			#Collect all the dynamics
 			clothObjs.append(mc.listRelatives(bubbleNClothName, s=True)[0])
 			mc.parent(locObj,curveObj, bubbleNClothName, grpFolder)
-			mc.parent(grpFolder, allBubblesGrp)	#else:
-		#print("The item selected doesn't appear to be an nCloth object --> " + shapeSel + " <--")
-	#print('print the cloth   ', clothObjs)
+			mc.parent(grpFolder, allBubblesGrp)
+			mc.setAttr(curveObj + '.visibility', 0)
+
+
 	mc.currentTime(1)
+	print('cloth objs variable {}'.format(clothObjs))
 	return clothObjs

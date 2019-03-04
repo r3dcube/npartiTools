@@ -5,6 +5,10 @@ from npartiTools import getnParti as gp
 from npartiTools.npartiBubble import npartiBubble as nb
 npartiSelection = []
 
+reload(sys.modules['npartiTools.npartiCurves'])
+reload(sys.modules['npartiTools.getnParti'])
+reload(sys.modules['npartiTools.npartiBubble.npartiBubble'])
+
 def updatePartiList(*args):
 	global npartiSelection
 	npartiList = []
@@ -20,8 +24,8 @@ def createBubbles(*args):
 	clothObjs = []
 	char = 'A'
 	#Needs a check to see if any other particle tubes have been created
-	if mc.objExists('tubeGrp_*'):#replace this with a literal since one item would need to exist.
-		getTubeNames = mc.ls('tubeGrp_*')
+	if mc.objExists('nbubbleGrp_*'):#replace this with a literal since one item would need to exist.
+		getTubeNames = mc.ls('nbubbleGrp_*')
 		check = []
 		letterCheck = None
 		for name in getTubeNames:
@@ -41,11 +45,9 @@ def createBubbles(*args):
 		npartiList.append(nParti)
 		particleDict = nc.npartiDict(npartiList)
 		folderName = nParti
-		makeBubbles = nb.buildnBubbles(particleDict, folderName, doesBubblePop, minScale, maxScale, charUp,clothObjs)
+		makeBubbles = nb.buildnBubbles(particleDict, folderName, doesBubblePop, minScale, maxScale, charUp, clothObjs)
 		mc.setAttr(nParti + '.isDynamic', 0)
-		print('cloth objects ',clothObjs)
 		for objs in clothObjs:
-			print('whats the name  ',objs)
 			mc.setAttr(objs + '.isDynamic', 0)
 		inc+=1
 	#
@@ -78,9 +80,6 @@ def makeBubbleGui():
 	mc.textField('maxScale', bgc=(0.21, 0.67, 0.72), text='0.5')
 	# E X T R U S I O N  R A N D
 	mc.frameLayout(l="Execute", la="top", bgc=(0.1, 0.1, 0.1), cll=False, cl=False, w = 200)
-
-
-
 
 	# C R E A T E  C U R V E S
 	mc.button(label="Make Bubbles", bgc=(0.24, 0.72, 0.46), c =createBubbles , h = 40 )
