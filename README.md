@@ -10,7 +10,7 @@ Tube Extrusion
 To load the UI copy, paste and execute the lines below in the script editor under Python witin Maya. Otherwise copy to the script editor and drag the code to a shelf and add the snippet as python.
 
 ```
-from npartiTools.npartiCurvePath import ui_tubes
+from npartiTools.npartiTubes import ui_tubes
 ui_tubes.makeTubeExtGui()
 ```
 
@@ -23,4 +23,11 @@ To load the UI copy, paste and execute the lines below in the script editor unde
 ```
 from  npartiTools.npartiBubble import ui_bubble
 ui_bubble.makeBubbleGui()
+```
+
+Curve Extrusion
+
+```
+from npartiTools.curveExtrude import curveExtru_ui
+curveExtru_ui.makeCurveExtGui()
 ```
