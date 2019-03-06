@@ -7,6 +7,7 @@ This tool combines several tools that exist in the ../scripts repository which w
 Tube Extrusion
 
 ![](docs_images/tubeExt.gif)
+![YOUTUBE Breakdown](docs_images/tubeExt.gif)](https://youtu.be/ef1B6UXzRR4)
 
 To load the UI copy, paste and execute the lines below in the script editor under Python witin Maya. Otherwise copy to the script editor and drag the code to a shelf and add the snippet as python.
 
